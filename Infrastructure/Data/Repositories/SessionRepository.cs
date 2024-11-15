@@ -11,7 +11,6 @@ namespace Infrastructure.Data.Repositories
         {
             return await DbLogicAsync(async () =>
             {
-                entity.Id = new(Guid.NewGuid());
                 dbContext.Sessions.Add(entity);
                 await dbContext.SaveChangesAsync();
                 return OperationResultCreator.SuccessWithValue(entity.Id.Value);
