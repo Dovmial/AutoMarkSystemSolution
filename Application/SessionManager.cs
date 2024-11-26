@@ -1,5 +1,6 @@
 ﻿
 
+using Application.PostOffice;
 using Domain.Aggregates.Lines;
 using Domain.Aggregates.Products;
 using Domain.Aggregates.Sessions;
@@ -11,8 +12,10 @@ namespace Application
 {
     public sealed class SessionManager(ISessionDAL dbRepository)
     {
-        //TODO добавить события
-        public SessionEntity? CurrentSession { get; private set; }
+        public SessionEntity? CurrentSession { get; set; }
+        
+        public event EventHandler<SessionStateEventArgs> SessionStateChanged;
+
         public async Task<OperationResult<SessionId>> Create(
             Enum_SessionType sessionType,
             ProductId productId,
@@ -49,7 +52,9 @@ namespace Application
             CurrentSession.State = sessionState;
             if(sessionState is Enum_SessionState.CLOSED)
                 CurrentSession.Closed = DateTime.UtcNow;
-            return await dbRepository.UpdateAsync(CurrentSession);
+            var result = await dbRepository.UpdateAsync(CurrentSession);
+            SessionStateChanged?.Invoke(this, new(CurrentSession.State));
+            return result;
         }
     }
 }
