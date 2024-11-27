@@ -12,7 +12,7 @@ namespace Infrastructure.Data.Repositories
         {
             return await DbLogicAsync(async () =>
             {
-                entity.MarkingCodeHistoryEntities.Add(MarkingCodeHistoryEntityExt.Create());
+                entity.MarkingCodeHistoryEntities.Add(MarkingCodeHistory.Create());
                 await db.AddAsync(entity);
                 await db.SaveChangesAsync();
                 return OperationResultCreator.SuccessWithValue(entity.Id.Value);

@@ -4,7 +4,7 @@ using Domain.Aggregates.MarkingCodes;
 
 namespace Domain.Aggregates.MarkingCodeHistory
 {
-    public static class MarkingCodeHistoryEntityExt
+    public static class MarkingCodeHistory
     {
         public static MarkingCodeHistoryEntity Create() => new MarkingCodeHistoryEntity()
         {

@@ -1,5 +1,7 @@
-﻿using Domain.Aggregates.Sessions;
+﻿using Domain.Aggregates.Products;
+using Domain.Aggregates.Sessions;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using SharedLibrary.OperationResult;
 using System.Linq.Expressions;
 
@@ -48,6 +50,18 @@ namespace Infrastructure.Data.Repositories
             return await DbLogicAsync(async () =>
             {
                 SessionEntity? entity = await GetEntity(dbContext, predicate, isTracking);
+                return OperationResultCreator.MayBeNotFound(entity);
+            });
+        }
+
+        public async Task<OperationResult<SessionEntity>> GetByFullAsync(Expression<Func<SessionEntity, bool>> predicate)
+        {
+            return await DbLogicAsync(async () =>
+            {
+                SessionEntity? entity = await dbContext.Sessions
+                    .Include(s => s.Product)
+                    .Include(s => s.ProductionLine)
+                    .FirstOrDefaultAsync(predicate);
                 return OperationResultCreator.MayBeNotFound(entity);
             });
         }
