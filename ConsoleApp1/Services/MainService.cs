@@ -58,7 +58,7 @@ namespace ConsoleApp1.Services
 
         private static async Task<Random> StartInit(ILogger<MainService> logger, CancellationToken stoppingToken)
         {
-            Random rnd = new Random();
+            Random rnd = new();
             await Task.Delay(1000, stoppingToken);
             string str = "Server started...";
             logger.LogInformation(str);

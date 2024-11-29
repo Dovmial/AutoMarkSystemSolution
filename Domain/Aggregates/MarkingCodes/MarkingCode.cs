@@ -8,7 +8,7 @@ namespace Domain.Aggregates.MarkingCodes
 {
     public static class MarkingCode
     {
-        public static MarkingCodeServerEntity Create(
+        public static MarkingCodeServerEntity CreateSeverCode(
             CodeValue code,
             ProductId productId,
             SessionId sessionId,

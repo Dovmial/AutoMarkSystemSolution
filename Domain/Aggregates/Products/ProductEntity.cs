@@ -9,7 +9,7 @@ namespace Domain.Aggregates.Products
     {
         public ProductId Id { get; set; }
         public string Name { get; set; } = name;
-        public int SerialLength { get; set; }
+        public int SerialLength { get; set; } = serialLength;
         public GTIN Gtin { get; set; } = gtin;
         public GTIN? GtinGroup { get; set; } = gtinGroup;
 

@@ -1,6 +1,4 @@
-﻿
-
-using Application.DTOs;
+﻿using Application.DTOs;
 using Application.Errors;
 using Application.PostOffice;
 using Domain.Aggregates.Lines;
@@ -10,12 +8,12 @@ using Domain.Enums;
 using Domain.Interfaces;
 using SharedLibrary.OperationResult;
 
-namespace Application
+namespace Application.LineLogic
 {
     public sealed class SessionManager(ISessionDAL dbRepository)
     {
         public SessionEntity? CurrentSession { get; set; }
-        
+
         public event EventHandler<SessionStateEventArgs>? SessionStateChanged;
         public event EventHandler<SessionOptionsEventArgs>? SessionOptionsChanged;
 
@@ -70,8 +68,8 @@ namespace Application
             {
                 Enum_SessionState.STARTED => CurrentSession.State is Enum_SessionState.UNKNOWN or Enum_SessionState.STOPPED,
                 Enum_SessionState.STOPPED => CurrentSession.State is Enum_SessionState.STARTED,
-                Enum_SessionState.CLOSED  => CurrentSession.State is Enum_SessionState.STOPPED,
-                Enum_SessionState.SENT    => CurrentSession.State is Enum_SessionState.CLOSED,
+                Enum_SessionState.CLOSED => CurrentSession.State is Enum_SessionState.STOPPED,
+                Enum_SessionState.SENT => CurrentSession.State is Enum_SessionState.CLOSED,
                 _ => false
             };
             if (!checkState)
@@ -79,13 +77,13 @@ namespace Application
             if (CurrentSession is null)
                 return OperationResultCreator.Failure(new INVALID_DATA("Session is null"));
             CurrentSession.State = sessionState;
-            if(sessionState is Enum_SessionState.CLOSED)
+            if (sessionState is Enum_SessionState.CLOSED)
                 CurrentSession.Closed = DateTime.UtcNow;
             var result = await dbRepository.UpdateAsync(CurrentSession);
 
             //запуск событий
             SessionStateChanged?.Invoke(this, new(CurrentSession.State));
-            
+
             return result;
         }
     }

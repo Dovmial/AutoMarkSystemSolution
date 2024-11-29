@@ -1,5 +1,6 @@
 ﻿
 
+using Application.LineLogic;
 using Domain.ValueObjects;
 using SharedLibrary.MessagingSystem;
 using SharedLibrary.OperationResult;
@@ -17,20 +18,21 @@ namespace Application.Producers
     internal class CodeProducer
     {
         internal ChannelReader<CodeValue> Reader { get; init; }
-        private IMessagingSystem _messagingSystem;
-        private Channel<CodeValue> _channelCode;
+        private readonly IMessagingSystem _messagingSystem;
+        private readonly Channel<CodeValue> _channelCode;
         private readonly ISourceCode _codeSource;
         private readonly SessionOptions _sessionOptions;
-        private CancellationToken _token;
+        private readonly CancellationToken _token;
         public CodeProducer(
             IMessagingSystem messagingSystem,
             ISourceCode codeSource,
             SessionOptions sessionOptions,
-            CancellationToken? token = null)
+            CancellationToken token = default)
         {
             _codeSource = codeSource;
             _sessionOptions = sessionOptions;
             _messagingSystem = messagingSystem;
+            _token = token;
 
             _channelCode = Channel.CreateUnbounded<CodeValue>(new UnboundedChannelOptions
             {
@@ -89,7 +91,7 @@ namespace Application.Producers
         private async Task HandleSingleCode(string codeStr)
         {
             //отправка кода обработчикам
-            CodeValue code = new CodeValue(codeStr);
+            CodeValue code = new(codeStr);
             await _channelCode.Writer.WriteAsync(code, _token);
         }
 

@@ -18,7 +18,7 @@ namespace Application
         private async Task<ICollection<string>> GetCodesRange(CancellationToken token)
         {
             await Task.Delay(_delayMs, token);
-            ICollection<string> codes = new List<string>();
+            ICollection<string> codes = [];
             for(int i = 0; i < packSize; i++)
                 codes.Add(await CodeGenerate(token));
             return codes;

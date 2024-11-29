@@ -1,5 +1,4 @@
-﻿
-namespace Application
+﻿namespace Application.LineLogic
 {
     public class LineProcessManager
     {

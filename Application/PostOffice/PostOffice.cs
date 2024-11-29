@@ -9,7 +9,7 @@ namespace Application.PostOffice
         public void Register<TMessage>(IReceiver receiver) where TMessage : IMessage
         {
             if(!_receivers.ContainsKey(typeof(TMessage)))
-                _receivers[typeof(TMessage)] = new List<IReceiver>();
+                _receivers[typeof(TMessage)] = [];
             var list = _receivers[typeof(TMessage)];
             if(!list.Contains(receiver))
                 list.Add(receiver);

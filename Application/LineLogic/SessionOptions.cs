@@ -1,8 +1,6 @@
-﻿
+﻿using Domain.ValueObjects;
 
-using Domain.ValueObjects;
-
-namespace Application
+namespace Application.LineLogic
 {
     internal record class SessionOptions(int CodeSerialLength, GTIN GTIN);
 }
