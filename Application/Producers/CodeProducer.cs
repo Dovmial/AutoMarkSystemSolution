@@ -19,12 +19,12 @@ namespace Application.Producers
         internal ChannelReader<CodeValue> Reader { get; init; }
         private IMessagingSystem _messagingSystem;
         private Channel<CodeValue> _channelCode;
-        private readonly ICodeSource _codeSource;
+        private readonly ISourceCode _codeSource;
         private readonly SessionOptions _sessionOptions;
         private CancellationToken _token;
         public CodeProducer(
             IMessagingSystem messagingSystem,
-            ICodeSource codeSource,
+            ISourceCode codeSource,
             SessionOptions sessionOptions,
             CancellationToken? token = null)
         {
@@ -73,7 +73,7 @@ namespace Application.Producers
             string codeStr = await _codeSource.GetCodeAsync(_token);
             if (!CheckStruct(codeStr).IsSuccess)
                 return;
-            await handleSingleCode(codeStr);
+            await HandleSingleCode(codeStr);
         }
 
         private async Task SendRangeCodes()
@@ -83,10 +83,10 @@ namespace Application.Producers
                 if(!CheckStruct(codeStr).IsSuccess)
                     return;
             foreach (string codeStr in codesStr)
-                await handleSingleCode(codeStr);
+                await HandleSingleCode(codeStr);
         }
 
-        private async Task handleSingleCode(string codeStr)
+        private async Task HandleSingleCode(string codeStr)
         {
             //отправка кода обработчикам
             CodeValue code = new CodeValue(codeStr);

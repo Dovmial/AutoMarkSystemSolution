@@ -1,30 +1,37 @@
 ﻿
+using Application.Producers;
 using Domain.ValueObjects;
 
 namespace Application
 {
-    public class CodeGenerator
+    public class CodeGenerator(GTIN gtin, int serialPartSize, int packSize): ISourceCode
     {
+        private readonly int _delayMs = 250;
         private const string ALPHABET = "!\"%&'()*+,-./0123456789:;<=>?ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
-        public static CodeValue CodeGenerate(int serialPartSize, GTIN gtin, Random rnd)
+        private async Task<string> CodeGenerate(CancellationToken token)
         {
-            char[] alphabet = rnd.GetItems(ALPHABET.AsSpan(), serialPartSize + 4);
+            await Task.Delay(_delayMs, token);
+            char[] alphabet = Random.Shared.GetItems(ALPHABET.AsSpan(), serialPartSize + 4);
             string code = $"010{gtin.Gtin}21{new string(alphabet[..serialPartSize])}\u001d93{new string(alphabet[^4..])}";
-            return new CodeValue(code);
+            return code;
         }
-        public static async IAsyncEnumerable<CodeValue> GetCodesRange(int serialPartSize, GTIN gtin, Random rnd, int amount, int delayMS)
+        private async Task<ICollection<string>> GetCodesRange(CancellationToken token)
         {
-            for (int i = 0; i < amount; i++)
-            {
-                await Task.Delay(delayMS);
-                yield return CodeGenerate(serialPartSize, gtin, rnd);
-            }
+            await Task.Delay(_delayMs, token);
+            ICollection<string> codes = new List<string>();
+            for(int i = 0; i < packSize; i++)
+                codes.Add(await CodeGenerate(token));
+            return codes;
         }
 
-        public static CodeValue CodeGenerate(int serialPartSize, Random rnd)
+        public async Task<string> GetCodeAsync(CancellationToken token)
         {
-            GTIN gtin = GtinGenerator.GetGTIN(rnd);
-            return CodeGenerate(serialPartSize, gtin, rnd);
+            return await CodeGenerate(token);
+        }
+
+        public async Task<ICollection<string>> GetRangeCodesAsync(CancellationToken token)
+        {
+            return await GetCodesRange(token);
         }
     }
 

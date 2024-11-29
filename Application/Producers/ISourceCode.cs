@@ -2,7 +2,7 @@
 
 namespace Application.Producers
 {
-    public interface ICodeSource
+    public interface ISourceCode
     {
         Task<string> GetCodeAsync(CancellationToken token);
         Task<ICollection<string>> GetRangeCodesAsync(CancellationToken token);
