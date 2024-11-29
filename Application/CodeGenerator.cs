@@ -3,9 +3,9 @@ using Domain.ValueObjects;
 
 namespace Application
 {
-    public static class CodeGenerator
+    public class CodeGenerator
     {
-        private static string ALPHABET = "!\"%&'()*+,-./0123456789:;<=>?ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
+        private const string ALPHABET = "!\"%&'()*+,-./0123456789:;<=>?ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
         public static CodeValue CodeGenerate(int serialPartSize, GTIN gtin, Random rnd)
         {
             char[] alphabet = rnd.GetItems(ALPHABET.AsSpan(), serialPartSize + 4);
