@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmsAPI", "AmsAPI\AmsAPI.csproj", "{32998BBA-5F44-45B8-AD2E-DDF083B95A3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmLineManager", "ArmLineManager\ArmLineManager.csproj", "{F4EB8307-EC63-480F-AF5F-EAA2C94CE253}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{32998BBA-5F44-45B8-AD2E-DDF083B95A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32998BBA-5F44-45B8-AD2E-DDF083B95A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32998BBA-5F44-45B8-AD2E-DDF083B95A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4EB8307-EC63-480F-AF5F-EAA2C94CE253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4EB8307-EC63-480F-AF5F-EAA2C94CE253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4EB8307-EC63-480F-AF5F-EAA2C94CE253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4EB8307-EC63-480F-AF5F-EAA2C94CE253}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{1287EF78-8120-4DDB-B3CF-FD8B8E66CC68} = {50832AB1-928A-47B7-ABDD-B02FD83DEC3D}
 		{86334935-224D-4D4C-A903-35A863A2DD82} = {407B17C3-986B-41E4-AD36-5ECA43AB93E8}
 		{32998BBA-5F44-45B8-AD2E-DDF083B95A3E} = {267C10AF-343F-4B4A-9AE5-8CCF2BF348A0}
+		{F4EB8307-EC63-480F-AF5F-EAA2C94CE253} = {267C10AF-343F-4B4A-9AE5-8CCF2BF348A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB6C99FA-1EF3-40C6-8AE4-706B5E290BEC}
